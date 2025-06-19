@@ -68,6 +68,7 @@ public class DatabaseMySQL implements IDatabaseSystem {
         } catch (SQLException e) {
             Logger.warning("Error creating the database: " + e.getMessage());
             Bukkit.getPluginManager().disablePlugin(GourLifeReborn.getInstance());
+            return;
         }
 
         try (Connection conn = DriverManager.getConnection(getUrl(), getUser(), getPassword());
@@ -77,6 +78,7 @@ public class DatabaseMySQL implements IDatabaseSystem {
         } catch (SQLException e) {
             Logger.warning("Error creating the table: " + e.getMessage());
             Bukkit.getPluginManager().disablePlugin(GourLifeReborn.getInstance());
+            return;
         }
     }
 
