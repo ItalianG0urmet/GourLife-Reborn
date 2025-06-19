@@ -16,10 +16,6 @@ public class Logger {
         sendText("<red>" + text + "</red>");
     }
 
-    public static void watch(String text) {
-        sendText("<obfuscated>" + text + "</obfuscated>");
-    }
-
     private static void sendText(String text) {
         Component message = Utils.toMini(PREFIX + text);
         Bukkit.getConsoleSender().sendMessage(message);
