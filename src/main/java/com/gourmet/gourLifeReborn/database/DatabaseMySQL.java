@@ -3,6 +3,7 @@ package com.gourmet.gourLifeReborn.database;
 import com.gourmet.gourLifeReborn.GourLifeReborn;
 import com.gourmet.gourLifeReborn.utils.Logger;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,6 +15,8 @@ import java.util.concurrent.CompletableFuture;
 public class DatabaseMySQL implements IDatabaseSystem {
 
     private final DatabaseCredential credentials = DatabaseCredential.getInstance();
+    @Getter
+    private boolean isEnabled = false;
 
     private String getUrl() {
         return "jdbc:mysql://" +
@@ -67,7 +70,6 @@ public class DatabaseMySQL implements IDatabaseSystem {
             Logger.info("Database '" + credentials.getName() + "' created/verified successfully");
         } catch (SQLException e) {
             Logger.warning("Error creating the database: " + e.getMessage());
-            Bukkit.getPluginManager().disablePlugin(GourLifeReborn.getInstance());
             return;
         }
 
@@ -77,9 +79,10 @@ public class DatabaseMySQL implements IDatabaseSystem {
             Logger.info("Table 'life_stats' created/verified successfully");
         } catch (SQLException e) {
             Logger.warning("Error creating the table: " + e.getMessage());
-            Bukkit.getPluginManager().disablePlugin(GourLifeReborn.getInstance());
             return;
         }
+
+        isEnabled = true;
     }
 
     private void ensurePlayerEntry(Player player) {
