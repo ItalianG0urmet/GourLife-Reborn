@@ -22,8 +22,8 @@ public class LanguageConfigManager implements IConfigManager {
     public String noPlayer;
     public String resetLife;
     public String noPermission;
-    public String checkLifes;
-    public String yourLifes;
+    public String checkLives;
+    public String yourLives;
     public String giveLife;
     public String receiveLife;
     public String notEnoughLifes;
@@ -33,11 +33,12 @@ public class LanguageConfigManager implements IConfigManager {
     public String titleRevelation;
     public String subtitleRevelation;
     public String deathMessage;
+    public String deathByPlayerMessage;
     public String finalDeathMessage;
     public String joinMessage;
     public String leaveMessage;
     public String gainedLife;
-    public String setLife;
+    public String setLives;
     public String helpCommands;
 
 
@@ -47,22 +48,23 @@ public class LanguageConfigManager implements IConfigManager {
         noPlayer = config.getString("messages.no-player");
         resetLife = config.getString("messages.reset-life");
         noPermission = config.getString("messages.no-permission");
-        checkLifes = config.getString("messages.check-lifes");
-        yourLifes = config.getString("messages.your-lifes");
+        checkLives = config.getString("messages.check-lives");
+        yourLives = config.getString("messages.your-lives");
         giveLife = config.getString("messages.give-life");
         receiveLife = config.getString("messages.receive-life");
-        notEnoughLifes = config.getString("messages.not-enough-lifes");
+        notEnoughLifes = config.getString("messages.not-enough-lives");
         cantFindPlayer = config.getString("messages.cant-find-player");
         cantSendToYourself = config.getString("messages.cant-send-to-yourself");
         revelationMessage = config.getString("messages.revelation_message");
         titleRevelation = config.getString("messages.title_revelation");
         subtitleRevelation = config.getString("messages.subtitle_revelation");
         deathMessage = config.getString("messages.death");
+        deathByPlayerMessage = config.getString("messages.death-by-player");
         finalDeathMessage = config.getString("messages.final-death");
         joinMessage = config.getString("messages.join");
         leaveMessage = config.getString("messages.leave");
         gainedLife = config.getString("messages.gained-life");
-        setLife = config.getString("messages.set-life");
+        setLives = config.getString("messages.set-life");
         helpCommands = config.getString("messages.help-commands");
     }
 
