@@ -1,22 +1,22 @@
 package com.gourmet.gourLifeReborn.database;
 
-import com.gourmet.gourLifeReborn.GourLifeReborn;
+import com.gourmet.gourLifeReborn.utils.BukkitAsyncExecutor;
 import com.gourmet.gourLifeReborn.utils.Logger;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DatabaseMySQL implements IDatabaseSystem {
 
     private final DatabaseCredential credentials = DatabaseCredential.getInstance();
-    @Getter
-    private boolean isEnabled = false;
+    private final Executor asyncexecutor = new BukkitAsyncExecutor();
+    @Getter private boolean isEnabled = false;
 
     private String getUrl() {
         return "jdbc:mysql://" +
@@ -58,11 +58,11 @@ public class DatabaseMySQL implements IDatabaseSystem {
                 " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 
         String createTableQuery = """
-                CREATE TABLE IF NOT EXISTS life_stats (
-                name VARCHAR(255) NOT NULL PRIMARY KEY,
-                lives INT DEFAULT 3
-            )
-            """;
+                    CREATE TABLE IF NOT EXISTS life_stats (
+                    name VARCHAR(255) NOT NULL PRIMARY KEY,
+                    lives INT DEFAULT 3
+                )
+                """;
 
         try (Connection conn = DriverManager.getConnection(getBaseUrl(), getUser(), getPassword());
              Statement stmt = conn.createStatement()) {
@@ -116,10 +116,9 @@ public class DatabaseMySQL implements IDatabaseSystem {
             return lives;
         });
     }
-
     @Override
-    public void addLife(Player player, int life) {
-        Bukkit.getScheduler().runTaskAsynchronously(GourLifeReborn.getInstance(), () -> {
+    public CompletableFuture<Void> addLife(Player player, int life) {
+        return CompletableFuture.runAsync(() -> {
             ensurePlayerEntry(player);
             String query = "UPDATE life_stats SET lives = lives + ? WHERE name = ?";
             try (Connection conn = DriverManager.getConnection(getUrl(), getUser(), getPassword());
@@ -130,17 +129,17 @@ public class DatabaseMySQL implements IDatabaseSystem {
             } catch (SQLException e) {
                 Logger.warning("Error adding " + life + " lives to " + player.getName() + ": " + e.getMessage());
             }
-        });
+        }, asyncexecutor);
     }
 
     @Override
-    public void addLife(Player player) {
-        addLife(player, 1);
+    public CompletableFuture<Void> addLife(Player player) {
+        return addLife(player, 1);
     }
 
     @Override
-    public void setLives(Player player, int life) {
-        Bukkit.getScheduler().runTaskAsynchronously(GourLifeReborn.getInstance(), () -> {
+    public CompletableFuture<Void> setLives(Player player, int life) {
+        return CompletableFuture.runAsync(() -> {
             ensurePlayerEntry(player);
             String query = "UPDATE life_stats SET lives = ? WHERE name = ?";
             try (Connection conn = DriverManager.getConnection(getUrl(), getUser(), getPassword());
@@ -151,12 +150,12 @@ public class DatabaseMySQL implements IDatabaseSystem {
             } catch (SQLException e) {
                 Logger.warning("Error setting lives of " + player.getName() + " to " + life + ": " + e.getMessage());
             }
-        });
+        }, asyncexecutor);
     }
 
     @Override
-    public void removeLife(Player player, int life) {
-        Bukkit.getScheduler().runTaskAsynchronously(GourLifeReborn.getInstance(), () -> {
+    public CompletableFuture<Void> removeLife(Player player, int life) {
+        return CompletableFuture.runAsync(() -> {
             ensurePlayerEntry(player);
             String query = "UPDATE life_stats SET lives = GREATEST(lives - ?, 0) WHERE name = ?";
             try (Connection conn = DriverManager.getConnection(getUrl(), getUser(), getPassword());
@@ -167,11 +166,12 @@ public class DatabaseMySQL implements IDatabaseSystem {
             } catch (SQLException e) {
                 Logger.warning("Error removing " + life + " lives from " + player.getName() + ": " + e.getMessage());
             }
-        });
+        }, asyncexecutor);
     }
 
     @Override
-    public void removeLife(Player player) {
-        removeLife(player, 1);
+    public CompletableFuture<Void> removeLife(Player player) {
+        return removeLife(player, 1);
     }
+
 }
