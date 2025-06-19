@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
 
+    implementation 'com.zaxxer:HikariCP:6.3.0'
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'org.json:json:20231013'
     implementation 'io.github.revxrsal:lamp.common:4.0.0-rc.12'
