@@ -5,3 +5,9 @@ database:
   user: "nome_utente"
   password: "password"
 
+settings:
+  Join-messages: true
+  leave-messages: true
+  death-message: true
+  final-message: true
+  life-number: 3

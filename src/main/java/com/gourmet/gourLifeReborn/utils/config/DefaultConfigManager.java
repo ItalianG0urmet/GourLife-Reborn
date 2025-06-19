@@ -14,20 +14,35 @@ public class DefaultConfigManager implements IConfigManager {
         loadConfig();
     }
 
-    /* Variabili database */
+    //Database
     public String dbHost;
     public int dbPort;
     public String dbName;
     public String dbUser;
     public String dbPassword;
 
+    //Settings
+    public boolean joinMessages;
+    public boolean leaveMessages;
+    public boolean deathMessage;
+    public boolean finalMessage;
+    public int lifeNumber;
+
     @Override
     public void loadConfig() {
+        //Database
         this.dbHost = config.getString("database.host");
         this.dbPort = config.getInt("database.port");
         this.dbName = config.getString("database.name");
         this.dbUser = config.getString("database.user");
         this.dbPassword = config.getString("database.password");
+
+        //Settings
+        this.joinMessages = config.getBoolean("settings.Join-messages");
+        this.leaveMessages = config.getBoolean("settings.leave-messages");
+        this.deathMessage = config.getBoolean("settings.death-message");
+        this.finalMessage = config.getBoolean("settings.final-message");
+        this.lifeNumber = config.getInt("settings.life-number");
     }
 
     @Override
@@ -37,7 +52,7 @@ public class DefaultConfigManager implements IConfigManager {
         loadConfig();
     }
 
-    /* Singleton define */
+    // Singleton
     private static class Holder {
         private static final DefaultConfigManager instance = new DefaultConfigManager();
     }
