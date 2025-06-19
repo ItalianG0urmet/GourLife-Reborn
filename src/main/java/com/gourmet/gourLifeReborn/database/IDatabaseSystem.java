@@ -7,11 +7,11 @@ import java.util.concurrent.CompletableFuture;
 public interface IDatabaseSystem {
 
     void initDatabase();
-    void removeLife(Player player, int life);
-    void removeLife(Player player);
-    void setLives(Player player, int life);
-    void addLife(Player player, int life);
-    void addLife(Player player);
+    CompletableFuture<Void> removeLife(Player player, int life);
+    CompletableFuture<Void> removeLife(Player player);
+    CompletableFuture<Void> setLives(Player player, int life);
+    CompletableFuture<Void> addLife(Player player, int life);
+    CompletableFuture<Void> addLife(Player player);
     CompletableFuture<Integer> getLife(Player player);
 
 }
