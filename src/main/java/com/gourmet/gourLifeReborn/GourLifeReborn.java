@@ -1,10 +1,8 @@
 package com.gourmet.gourLifeReborn;
 
-import com.gourmet.gourLifeReborn.database.DatabaseCredential;
 import com.gourmet.gourLifeReborn.database.DatabaseMySQL;
-import com.gourmet.gourLifeReborn.utils.ListenerRegistrar;
-import com.gourmet.gourLifeReborn.utils.Logger;
-import com.gourmet.gourLifeReborn.utils.config.LanguageConfigManager;
+import com.gourmet.gourLifeReborn.external.GourPlaceHolderAPI;
+import com.gourmet.gourLifeReborn.utils.ListenerAndCommandsRegistrar;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,14 +15,22 @@ public final class GourLifeReborn extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        //Database
         DatabaseMySQL.getInstance().initDatabase();
         if (!DatabaseMySQL.getInstance().isEnabled()){
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        ListenerRegistrar.registerAll();
 
-        Logger.info(" > " + LanguageConfigManager.getInstance().finalDeathMessage);
+        ListenerAndCommandsRegistrar.registerAll();
+        placeHolderInit();
     }
+
+    private void placeHolderInit() {
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new GourPlaceHolderAPI().register();
+        }
+    }
+
 
 }
