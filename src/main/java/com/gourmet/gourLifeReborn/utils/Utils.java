@@ -16,11 +16,9 @@ public class Utils {
     }
 
     public void sendMessageAll(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(GourLifeReborn.getInstance(), () -> {
-            Component component = toMini(message);
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendMessage(component);
-            }
-        });
+        Component component = toMini(message);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(component);
+        }
     }
 }
