@@ -37,6 +37,10 @@ java {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['-parameters']
+}
+
 tasks.named('build') {
     dependsOn tasks.named('shadowJar')
 }
