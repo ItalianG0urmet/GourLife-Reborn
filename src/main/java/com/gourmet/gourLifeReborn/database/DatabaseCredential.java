@@ -1,11 +1,8 @@
 package com.gourmet.gourLifeReborn.database;
 
-import com.gourmet.gourLifeReborn.GourLifeReborn;
-import com.gourmet.gourLifeReborn.utils.Logger;
 import com.gourmet.gourLifeReborn.utils.config.DefaultConfigManager;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 
 @Getter
 @Setter
