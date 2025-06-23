@@ -15,13 +15,6 @@ public final class GourLifeReborn extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        //Database
-        DatabaseMySQL.getInstance().initDatabase();
-        if (!DatabaseMySQL.getInstance().isEnabled()){
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-
         ListenerAndCommandsRegistrar.registerAll();
         placeHolderInit();
     }

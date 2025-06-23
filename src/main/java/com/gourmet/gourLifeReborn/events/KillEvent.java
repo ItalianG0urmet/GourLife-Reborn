@@ -1,6 +1,8 @@
 package com.gourmet.gourLifeReborn.events;
 
+import com.gourmet.gourLifeReborn.database.DatabaseManager;
 import com.gourmet.gourLifeReborn.database.DatabaseMySQL;
+import com.gourmet.gourLifeReborn.database.DatabaseSqlLite;
 import com.gourmet.gourLifeReborn.utils.Utils;
 import com.gourmet.gourLifeReborn.utils.config.LanguageConfigManager;
 import org.bukkit.event.EventHandler;
@@ -11,7 +13,7 @@ public class KillEvent implements Listener {
 
     @EventHandler
     public void onKill(PlayerDeathEvent e){
-        var databaseManager = DatabaseMySQL.getInstance();
+        var data = DatabaseManager.getInstance().getDatabaseSystem();
         var lang = LanguageConfigManager.getInstance();
         var player = e.getPlayer();
         var killer = player.getKiller();
@@ -19,8 +21,8 @@ public class KillEvent implements Listener {
         e.setDeathMessage("");
 
         if (killer == null) {
-            databaseManager.removeLife(player).thenCompose(v ->
-                    databaseManager.getLife(player)
+            data.removeLife(player).thenCompose(v ->
+                    data.getLife(player)
             ).thenAccept(newLives -> {
                 var message = lang.deathMessage
                         .replace("%player%", player.getName())
@@ -34,10 +36,10 @@ public class KillEvent implements Listener {
             });
         } else {
 
-            databaseManager.removeLife(player).thenCompose(v ->
-                    databaseManager.addLife(killer)
+            data.removeLife(player).thenCompose(v ->
+                    data.addLife(killer)
             ).thenCompose(v ->
-                    databaseManager.getLife(player)
+                    data.getLife(player)
             ).thenAccept(newLives -> {
                 var message = lang.deathByPlayerMessage
                         .replace("%player%", player.getName())

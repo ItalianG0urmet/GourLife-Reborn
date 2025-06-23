@@ -1,7 +1,9 @@
 package com.gourmet.gourLifeReborn.commands;
 
 import com.gourmet.gourLifeReborn.database.DatabaseCredential;
+import com.gourmet.gourLifeReborn.database.DatabaseManager;
 import com.gourmet.gourLifeReborn.database.DatabaseMySQL;
+import com.gourmet.gourLifeReborn.database.IDatabaseSystem;
 import com.gourmet.gourLifeReborn.utils.Utils;
 import com.gourmet.gourLifeReborn.utils.config.DefaultConfigManager;
 import com.gourmet.gourLifeReborn.utils.config.LanguageConfigManager;
@@ -13,7 +15,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 @Command("glife")
 public class LifeCMD {
 
-    private final DatabaseMySQL database = DatabaseMySQL.getInstance();
+    private final IDatabaseSystem database = DatabaseManager.getInstance().getDatabaseSystem();
     private final LanguageConfigManager lang = LanguageConfigManager.getInstance();
 
     @Subcommand("check <target>")
