@@ -1,6 +1,5 @@
 package com.gourmet.gourLifeReborn.utils;
 
-import com.gourmet.gourLifeReborn.GourLifeReborn;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
