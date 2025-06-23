@@ -1,4 +1,5 @@
 database:
+  isSqlLite: "is-my-sql";
   host: "localhost"
   port: 3306
   name: "database_name"
