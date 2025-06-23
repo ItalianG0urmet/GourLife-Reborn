@@ -15,6 +15,7 @@ public class DefaultConfigManager implements IConfigManager {
     }
 
     //Database
+    public boolean isSqlLite;
     public String dbHost;
     public int dbPort;
     public String dbName;
@@ -31,6 +32,7 @@ public class DefaultConfigManager implements IConfigManager {
     @Override
     public void loadConfig() {
         //Database
+        this.isSqlLite = config.getBoolean("database.is-my-sql");
         this.dbHost = config.getString("database.host");
         this.dbPort = config.getInt("database.port");
         this.dbName = config.getString("database.name");
